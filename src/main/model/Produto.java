@@ -1,17 +1,11 @@
+
+package model;
+
 public class Produto {
 
     private Long id;
     private String nome;
-    private Double preco;
-
-    public Produto() {
-    }
-
-    public Produto(Long id, String nome, Double preco) {
-        this.id = id;
-        this.nome = nome;
-        this.preco = preco;
-    }
+    private double preco;
 
     public Long getId() {
         return id;
@@ -29,11 +23,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public double getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(double preco) {
         this.preco = preco;
     }
 }

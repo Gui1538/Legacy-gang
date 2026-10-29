@@ -3,10 +3,8 @@ import model.Produto;
 
 public class Main {
     public static void main(String[] args) {
-        // Criar o controlador para testar as camadas
         ProdutoController controller = new ProdutoController();
 
-        // 1. Criar um produto de teste
         Produto p1 = new Produto();
         p1.setId(1L);
         p1.setNome("Caderno Inteligente");
@@ -19,10 +17,11 @@ public class Main {
         p2.setPreco(3.50);
         controller.salvar(p2);
 
-        // 2. Listar os produtos e mostrar no terminal
-        System.out.println("=== TESTE DA POC A FUNCIONAR ===");
+        System.out.println("=== LOJA VIRTUAL ===");
+
         for (Produto prod : controller.listar()) {
-            System.out.println("Produto: " + prod.getNome() + " | Preço: R$ " + prod.getPreco());
+            System.out.println("Produto: " + prod.getNome()
+                    + " | Preço: R$ " + prod.getPreco());
         }
     }
 }
