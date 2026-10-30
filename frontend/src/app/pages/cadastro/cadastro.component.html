@@ -1,0 +1,54 @@
+<main class="tela-centro">
+  <section class="painel">
+    <a routerLink="/" class="marca"><span class="marca-logo"></span>VV Market</a>
+    <h1>Crie sua conta</h1>
+    <p class="subtitulo">Leva menos de um minuto.</p>
+
+    <form [formGroup]="form" (ngSubmit)="cadastrar()" novalidate>
+      <div class="campo">
+        <label for="nome">Nome completo</label>
+        <input id="nome" type="text" formControlName="nome" autocomplete="name" />
+        @if (form.controls.nome.touched && form.controls.nome.invalid) {
+          <small class="erro-campo">Informe seu nome completo.</small>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" formControlName="email" autocomplete="email" />
+        @if (form.controls.email.touched && form.controls.email.invalid) {
+          <small class="erro-campo">Informe um e-mail válido.</small>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" formControlName="senha" autocomplete="new-password" />
+        @if (form.controls.senha.touched && form.controls.senha.invalid) {
+          <small class="erro-campo">A senha precisa ter pelo menos 6 caracteres.</small>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="confirmarSenha">Confirmar senha</label>
+        <input id="confirmarSenha" type="password" formControlName="confirmarSenha" autocomplete="new-password" />
+        @if (form.controls.confirmarSenha.touched && form.hasError('senhasDiferentes')) {
+          <small class="erro-campo">As senhas não são iguais.</small>
+        }
+      </div>
+
+      @if (erro()) {
+        <p class="alerta alerta-erro" role="alert">{{ erro() }}</p>
+      }
+
+      <button type="submit" class="btn btn-primario btn-bloco" [disabled]="carregando()">
+        {{ carregando() ? 'Criando conta...' : 'Criar conta' }}
+      </button>
+    </form>
+
+    <div class="separador"><span>ou</span></div>
+    <div class="google-area"><app-google-button (erro)="erro.set($event)" /></div>
+
+    <p class="rodape-painel">Já tem conta? <a routerLink="/login">Entrar</a></p>
+  </section>
+</main>

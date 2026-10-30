@@ -1,0 +1,81 @@
+<main class="container pagina">
+  @if (modo === 'todos') {
+    <section class="topo-home">
+      <h1>Olá, {{ primeiroNome() }}! O que você procura hoje?</h1>
+      <p class="subtitulo">Pesquise entre os produtos cadastrados na plataforma.</p>
+    </section>
+  } @else {
+    <section class="topo-pagina">
+      <div>
+        <h1>Meus produtos</h1>
+        <p class="subtitulo">Só você pode editar ou excluir os produtos desta página.</p>
+      </div>
+      <a routerLink="/produtos/novo" class="btn btn-turquesa">Cadastrar produto</a>
+    </section>
+  }
+
+  <form class="busca" (ngSubmit)="carregar()" role="search">
+    <input type="search" [formControl]="busca" placeholder="Pesquisar por nome ou descrição" aria-label="Pesquisar produtos" />
+    <button type="submit" class="btn btn-primario">Pesquisar</button>
+    @if (busca.value) {
+      <button type="button" class="btn btn-claro" (click)="limparBusca()">Limpar</button>
+    }
+  </form>
+
+  @if (erro()) {
+    <p class="alerta alerta-erro" role="alert">{{ erro() }}</p>
+  }
+
+  @if (carregando()) {
+    <p class="vazio">Carregando produtos...</p>
+  } @else if (produtos().length === 0) {
+    <div class="vazio">
+      @if (busca.value) {
+        <p>Nenhum produto encontrado para "{{ busca.value }}".</p>
+      } @else if (modo === 'meus') {
+        <p>Você ainda não cadastrou nenhum produto.</p>
+        <a routerLink="/produtos/novo" class="btn btn-turquesa">Cadastrar meu primeiro produto</a>
+      } @else {
+        <p>Ainda não há produtos cadastrados.</p>
+        <a routerLink="/produtos/novo" class="btn btn-turquesa">Cadastrar o primeiro produto</a>
+      }
+    </div>
+  } @else {
+    <div class="grade">
+      @for (p of produtos(); track p.id) {
+        <article class="produto">
+          <div class="produto-img cor-{{ cor(p) }}">
+            <span>{{ p.nome.charAt(0).toUpperCase() }}</span>
+            @if (p.imagemUrl) {
+              <img [src]="p.imagemUrl" [alt]="p.nome" referrerpolicy="no-referrer" (error)="$any($event.target).hidden = true" />
+            }
+          </div>
+
+          <div class="produto-corpo">
+            <div class="produto-linha">
+              <h2>{{ p.nome }}</h2>
+              <span class="produto-id">#{{ p.id }}</span>
+            </div>
+            @if (p.descricao) {
+              <p class="produto-descricao">{{ p.descricao }}</p>
+            }
+            <strong class="produto-preco">{{ p.preco | currency: 'BRL' }}</strong>
+            <p class="produto-dono">
+              Vendido por {{ p.nomeDono }}<br />
+              <span>{{ p.emailDono }}</span>
+            </p>
+
+            @if (modo === 'meus') {
+              <div class="produto-acoes">
+                <a [routerLink]="['/produtos', p.id, 'editar']" class="btn btn-claro">Editar</a>
+                <button type="button" class="btn btn-perigo" (click)="excluir(p)">Excluir</button>
+              </div>
+            } @else if (ehMeu(p)) {
+              <span class="selo">Seu produto</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</main>

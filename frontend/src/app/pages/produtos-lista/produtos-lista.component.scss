@@ -1,0 +1,72 @@
+.topo-home {
+  padding-block: 1rem 0.5rem;
+  h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); max-width: 20ch; }
+}
+
+.topo-pagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 1rem;
+  h1 { font-size: 2rem; }
+}
+
+.busca {
+  display: flex;
+  gap: 0.6rem;
+  margin: 1.5rem 0 2rem;
+  input { flex: 1; }
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+
+.produto {
+  background: var(--superficie);
+  border: 1px solid var(--linha);
+  border-radius: 1.25rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.produto-img {
+  position: relative;
+  height: 10rem;
+  display: grid;
+  place-items: center;
+  font: 700 3.5rem 'Fredoka', sans-serif;
+
+  img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  &.cor-0 { background: var(--coral-claro);     color: var(--coral); }
+  &.cor-1 { background: var(--turquesa-claro);  color: #0E9C90; }
+  &.cor-2 { background: var(--sol-claro);       color: #C98F00; }
+  &.cor-3 { background: var(--violeta-claro);   color: var(--violeta); }
+}
+
+.produto-corpo { padding: 1rem; display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
+.produto-linha { display: flex; justify-content: space-between; gap: 0.5rem; align-items: baseline; }
+.produto-linha h2 { font-size: 1.15rem; }
+.produto-id { color: var(--tinta-suave); font-size: 0.85rem; font-weight: 700; }
+.produto-descricao {
+  color: var(--tinta-suave);
+  font-size: 0.95rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.produto-preco { font-size: 1.3rem; color: var(--violeta); }
+.produto-dono { font-size: 0.85rem; color: var(--tinta-suave); margin-top: auto; padding-top: 0.5rem; span { word-break: break-all; } }
+.produto-acoes { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
+.selo { align-self: flex-start; background: var(--sol-claro); color: #8A6200; font-weight: 700; font-size: 0.8rem; padding: 0.2rem 0.7rem; border-radius: 99px; }
+
+@media (max-width: 560px) {
+  .busca { flex-wrap: wrap; input { flex-basis: 100%; } }
+}

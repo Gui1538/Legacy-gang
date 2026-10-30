@@ -1,0 +1,55 @@
+<main class="container pagina estreita">
+  <h1>Meu perfil</h1>
+  <p class="subtitulo">Mantenha seus dados em dia. O e-mail não pode ser alterado.</p>
+
+  @if (erro()) {
+    <p class="alerta alerta-erro" role="alert">{{ erro() }}</p>
+  }
+  @if (sucesso()) {
+    <p class="alerta alerta-ok" role="status">{{ sucesso() }}</p>
+  }
+
+  @if (!carregando()) {
+    <form class="cartao" [formGroup]="form" (ngSubmit)="salvar()" novalidate>
+      <div class="perfil-foto">
+        <div class="avatar avatar-grande">
+          @if (form.controls.fotoUrl.value) {
+            <img [src]="form.controls.fotoUrl.value" alt="Sua foto" referrerpolicy="no-referrer" (error)="$any($event.target).hidden = true" />
+          }
+          <span>{{ inicial() }}</span>
+        </div>
+        <div class="campo">
+          <label for="fotoUrl">Link da foto</label>
+          <input id="fotoUrl" type="url" formControlName="fotoUrl" placeholder="https://..." />
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="nome">Nome completo</label>
+        <input id="nome" type="text" formControlName="nome" />
+        @if (form.controls.nome.touched && form.controls.nome.invalid) {
+          <small class="erro-campo">Informe seu nome completo.</small>
+        }
+      </div>
+
+      <div class="campo">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" [value]="email" disabled />
+      </div>
+
+      <div class="campo">
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="tel" formControlName="telefone" placeholder="(61) 90000-0000" />
+      </div>
+
+      <div class="campo">
+        <label for="cidade">Cidade</label>
+        <input id="cidade" type="text" formControlName="cidade" />
+      </div>
+
+      <button type="submit" class="btn btn-primario" [disabled]="salvando()">
+        {{ salvando() ? 'Salvando...' : 'Salvar alterações' }}
+      </button>
+    </form>
+  }
+</main>
